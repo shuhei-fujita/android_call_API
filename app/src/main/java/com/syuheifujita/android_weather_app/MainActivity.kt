@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -86,6 +87,33 @@ class MainActivity : AppCompatActivity() {
             cancelProgressDialog()
 
             Log.i("JSON RESPONS RESULT", result)
+
+            val jsonObject = JSONObject(result)
+            val message = jsonObject.optString("message")
+            Log.i("Message", message)
+            val userId = jsonObject.optInt("user_id")
+            Log.i("User Id", "$userId")
+            val name = jsonObject.optString("name")
+            Log.i("Name", "$message")
+
+            val profileDetailObject = jsonObject.optJSONObject("profile_datail")
+            val isProfileCompleted = profileDetailObject.optBoolean("is_profile_completed")
+            Log.i("Is Profile Completed", "$isProfileCompleted")
+
+            val dataListArray = jsonObject.optJSONArray("data_list")
+            Log.i("Data List Size", "${dataListArray.length()}")
+
+            for (item in 0 until dataListArray.length()) {
+                Log.i("Data List Size", "${dataListArray[item]}")
+
+                val dataItemObject: JSONObject = dataListArray[item] as JSONObject
+
+                val id = dataItemObject.optInt("id")
+                Log.i("ID", "$id")
+
+                val value = dataItemObject.optString("values")
+                Log.i("Value", "$value")
+            }
         }
 
         private fun showProgressDialog() {
