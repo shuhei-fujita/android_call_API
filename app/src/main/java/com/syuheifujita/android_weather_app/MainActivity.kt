@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CallAPILoginAsyncTask().execute()
+        CallAPILoginAsyncTask("syuhei", "123456").execute()
     }
 
-    private inner class CallAPILoginAsyncTask(): AsyncTask<Any, Void, String>() {
+    private inner class CallAPILoginAsyncTask(val username: String, val password: String): AsyncTask<Any, Void, String>() {
         private lateinit var customProgressDialog: Dialog
 
         override fun onPreExecute() {
